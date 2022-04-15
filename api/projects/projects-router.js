@@ -10,12 +10,11 @@ router.get('/', (req,res ) => {
 })
 
 router.get('/:id', (req,res ) => {
-    // const id = req.params.id
-    // Projects.get(id)
-    // .then(action => {
-    //     res.json(action)
-    // })
-    res.send(' get/:id route hit')
+    const id = req.params.id
+    Projects.get(id)
+    .then(action => {
+        res.json(action)
+    })
 })
 
 router.get('/:id/actions', (req,res ) => {
