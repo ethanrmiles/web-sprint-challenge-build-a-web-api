@@ -21,10 +21,10 @@ router.get('/:id/actions', (req, res) => {
 
 router.post('/',   (req,res ) => {
     const { name, description } = req.body
-        if(!name){
+        if(!name || typeof name != 'string'){
             res.status(400).json({ message: 'please input a name'})
             return
-        }else if(!description){
+        }else if(!description || typeof description != 'string'){
             res.status(400).json({ message: 'please input a description'})
             return
         }else{
@@ -33,25 +33,27 @@ router.post('/',   (req,res ) => {
                     res.status(201).json(newAction)
                 })
         }
-    // .then(newAction => {
-    //     res.status(201).json(newAction)
-    // })
-    // .catch(err => {
-    //     res.status(400)
-    // })
 })
 
 router.put('/:id', ensureIdExists, (req,res, next ) => {
     const changes = req.body
+    const { name, description } = req.body
+    if(!name || typeof name != 'string'){
+        res.status(400).json({ message: 'please input a name'})
+        return
+    }else if(!description || typeof description != 'string'){
+        res.status(400).json({ message: 'please input a description'})
+        return
+    }else{
     Projects.update(req.params.id, changes)
     .then(action => {
         if (action){
             res.json(action)
         }else {
-            res.json({ message: "something went wrong"})
+            res.status(404).json({ message: "there is no project with that id"})
         }
-
     })
+}
 })  
 
 router.delete('/:id', (req,res ) => {

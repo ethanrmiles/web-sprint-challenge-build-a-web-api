@@ -24,32 +24,7 @@ function checkProjectsValue(req, res, next) {
   });
 }
 
-// function validateInput(req, res, next) {
-//   if (typeof req.body.name != "string" || req.body.name.trim() == "") {
-//     res.status(400).json({ message: "name is required and must have a value" });
-//     return;
-//   } else {
-//     if (
-//       typeof req.body.description != "string" ||
-//       req.body.description.trim() == ""
-//     ) {
-//       res
-//         .status(400)
-//         .json({ message: "description is required and must have a value" });
-//       return;
-//     }
-//     Projects.insert(req.body)
-//     .then(newProj => {
-//         req.validatedPost = newProj
-//     })
-//   next();
-//   }
- 
-
-// }
-
 module.exports = {
   ensureIdExists,
-  checkProjectsValue,
-//   validateInput,
+  checkProjectsValue
 };
