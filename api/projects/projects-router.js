@@ -2,18 +2,13 @@ const express = require('express')
 const Projects = require('./projects-model')
 const router = express.Router();
 
-const { checkProjectsValue, ensureIdExists } = require('./projects-middleware')
+const { checkProjectsValue, ensureIdExists, validateInput } = require('./projects-middleware')
 
 router.get('/', checkProjectsValue, (req,res,next ) => {
     res.send(req.projectsExist)
 })
 
 router.get('/:id', ensureIdExists, (req,res, next) => {
-    // const id = req.params.id
-    // Projects.get(id)
-    // .then(project => {
-    //     res.json(project)
-    // })
     res.json(req.existingProject)
 })
 
@@ -24,14 +19,29 @@ router.get('/:id/actions', (req, res) => {
     })
 })
 
-router.post('/', (req,res ) => {
-    Projects.insert(req.body)
-    .then(newAction => {
-        res.json(newAction)
-    })
+router.post('/',   (req,res ) => {
+    const { name, description } = req.body
+        if(!name){
+            res.status(400).json({ message: 'please input a name'})
+            return
+        }else if(!description){
+            res.status(400).json({ message: 'please input a description'})
+            return
+        }else{
+            Projects.insert(req.body)
+            .then(newAction => {
+                    res.status(201).json(newAction)
+                })
+        }
+    // .then(newAction => {
+    //     res.status(201).json(newAction)
+    // })
+    // .catch(err => {
+    //     res.status(400)
+    // })
 })
 
-router.put('/:id', (req,res ) => {
+router.put('/:id', ensureIdExists, (req,res, next ) => {
     const changes = req.body
     Projects.update(req.params.id, changes)
     .then(action => {
@@ -40,6 +50,7 @@ router.put('/:id', (req,res ) => {
         }else {
             res.json({ message: "something went wrong"})
         }
+
     })
 })  
 
