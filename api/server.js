@@ -1,6 +1,7 @@
 const express = require('express');
 const helmet = require('helmet');
 const actionsRouter = require('../api/actions/actions-router') 
+const projectRouter = require('../api/projects/projects-router')
 
 const server = express()
 
@@ -10,6 +11,7 @@ server.use(helmet())
 // server.use('/', (req,res) => res.send('API is up and running!'))
 
 server.use('/api/actions', actionsRouter )
+server.use('/api/projects', projectRouter)
 
 
 
