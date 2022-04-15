@@ -2,7 +2,7 @@ const express = require('express')
 const Projects = require('./projects-model')
 const router = express.Router();
 
-const { checkProjectsValue, ensureIdExists, validateInput } = require('./projects-middleware')
+const { checkProjectsValue, ensureIdExists } = require('./projects-middleware')
 
 router.get('/', checkProjectsValue, (req,res,next ) => {
     res.send(req.projectsExist)

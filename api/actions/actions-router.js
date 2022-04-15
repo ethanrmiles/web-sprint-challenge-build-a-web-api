@@ -2,6 +2,10 @@ const express = require('express')
 const Actions = require('./actions-model')
 const router = express.Router();
 
+const { ensureIdExists } = require('./actions-middlware')
+
+
+
 router.get('/', (req,res ) => {
     Actions.get(null)
     .then(action => {
@@ -9,12 +13,13 @@ router.get('/', (req,res ) => {
     })
 })
 
-router.get('/:id', (req,res ) => {
-    const id = req.params.id
-    Actions.get(id)
-    .then(action => {
-        res.json(action)
-    })
+router.get('/:id', ensureIdExists, (req,res, next) => {
+    // const id = req.params.id
+    // Actions.get(id)
+    // .then(action => {
+    //     res.json(action)
+    // })
+    res.json(req.existingAction)
 })
 
 router.post('/', (req,res ) => {
