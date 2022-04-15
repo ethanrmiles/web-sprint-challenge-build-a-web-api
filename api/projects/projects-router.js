@@ -3,11 +3,10 @@ const Projects = require('./projects-model')
 const router = express.Router();
 
 router.get('/', (req,res ) => {
-    // Projects.get(null)
-    // .then(action => {
-    //     res.json(action)
-    // })
-    res.send(' get/ route hit')
+    Projects.get(null)
+    .then(action => {
+        res.json(action)
+    })
 })
 
 router.get('/:id', (req,res ) => {
