@@ -55,7 +55,11 @@ router.put('/:id',  ensureIdExists,  (req,res, next ) => {
 router.delete('/:id', (req,res ) => {
     Actions.remove(req.params.id)
     .then(action => {
-        res.json({ message: 'It has been deleted'})
+        if(!action){
+            res.status(404).json({ message: "there is no project with that id"})
+        }else{
+            res.json(action)
+        }
     })
 })
 

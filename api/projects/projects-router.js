@@ -61,6 +61,8 @@ router.delete('/:id', (req,res ) => {
     .then(action => {
         if(!action){
             res.status(404).json({ message: "there is no project with that id"})
+        }else{
+            res.json(action)
         }
     })
 })
