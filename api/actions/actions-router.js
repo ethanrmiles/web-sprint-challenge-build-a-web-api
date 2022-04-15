@@ -18,7 +18,10 @@ router.get('/:id', (req,res ) => {
 })
 
 router.post('/', (req,res ) => {
-    res.send('/ being hit')
+    Actions.insert(req.body)
+    .then(newAction => {
+        res.json(newAction)
+    })
 })
 
 router.put('/:id', (req,res ) => {
