@@ -24,11 +24,10 @@ router.get('/:id', (req,res ) => {
 // })
 
 router.post('/', (req,res ) => {
-    // Projects.insert(req.body)
-    // .then(newAction => {
-    //     res.json(newAction)
-    // })
-    res.send(' post/ route hit')
+    Projects.insert(req.body)
+    .then(newAction => {
+        res.json(newAction)
+    })
 })
 
 router.put('/:id', (req,res ) => {
