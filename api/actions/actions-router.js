@@ -37,7 +37,10 @@ router.put('/:id', (req,res ) => {
 })  
 
 router.delete('/:id', (req,res ) => {
-    res.send(' delete :/id being hit')
+    Actions.remove(req.params.id)
+    .then(action => {
+        res.json({ message: 'It has been deleted'})
+    })
 })
 
 module.exports = router
