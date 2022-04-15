@@ -3,11 +3,10 @@ const Actions = require('./actions-model')
 const router = express.Router();
 
 router.get('/', (req,res ) => {
-    // Actions.get(null)
-    // .then(action => {
-    //     res.json(action)
-    // })
-    res.send('/ being hit')
+    Actions.get(null)
+    .then(action => {
+        res.json(action)
+    })
 })
 
 router.get('/:id', (req,res ) => {
