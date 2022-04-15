@@ -25,7 +25,15 @@ router.post('/', (req,res ) => {
 })
 
 router.put('/:id', (req,res ) => {
-    res.send(':/id being hit')
+    const changes = req.body
+    Actions.update(req.params.id, changes)
+    .then(action => {
+        if (action){
+            res.json(action)
+        }else {
+            res.json({ message: "something went wrong"})
+        }
+    })
 })  
 
 router.delete('/:id', (req,res ) => {
