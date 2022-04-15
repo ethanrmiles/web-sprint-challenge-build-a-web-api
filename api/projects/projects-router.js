@@ -44,11 +44,10 @@ router.put('/:id', (req,res ) => {
 })  
 
 router.delete('/:id', (req,res ) => {
-    // Projects.remove(req.params.id)
-    // .then(action => {
-    //     res.json({ message: 'It has been deleted'})
-    // })
-    res.send(' delete/:id route hit')
+    Projects.remove(req.params.id)
+    .then(action => {
+        res.json({ message: 'It has been deleted'})
+    })
 })
 
 module.exports = router
