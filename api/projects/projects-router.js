@@ -2,19 +2,19 @@ const express = require('express')
 const Projects = require('./projects-model')
 const router = express.Router();
 
-router.get('/', (req,res ) => {
-    Projects.get(null)
-    .then(action => {
-        res.json(action)
-    })
+const { checkProjectsValue, ensureIdExists } = require('./projects-middleware')
+
+router.get('/', checkProjectsValue, (req,res,next ) => {
+    res.send(req.projectsExist)
 })
 
-router.get('/:id', (req,res) => {
-    const id = req.params.id
-    Projects.get(id)
-    .then(project => {
-        res.json(project)
-    })
+router.get('/:id', ensureIdExists, (req,res, next) => {
+    // const id = req.params.id
+    // Projects.get(id)
+    // .then(project => {
+    //     res.json(project)
+    // })
+    res.json(req.existingProject)
 })
 
 router.get('/:id/actions', (req, res) => {
