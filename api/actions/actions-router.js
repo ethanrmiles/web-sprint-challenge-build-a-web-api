@@ -33,17 +33,23 @@ router.post('/',  (req,res, next ) => {
 }
 })
 
-router.put('/:id',  getAmountOfProjects, (req,res, next ) => {
-    const { project_id, description, notes } = req.body
-    // getAmountOfProjects
-    Actions.update(req.param.id, changes)
+router.put('/:id',  ensureIdExists,  (req,res, next ) => {
+    const  changes  = req.body
+    if(!req.body.notes || typeof req.body.notes != 'string'){
+        res.status(400).json({ message: 'please input some notes'})
+        return
+    }else if(!req.body.description || typeof req.body.description != 'string'){
+        res.status(400).json({ message: 'please input a description'})
+        return
+    }else if(!req.body.project_id || typeof req.body.project_id != 'number'){
+        res.status(400).json({ message: 'please input a project_id'})
+        return
+    }else{
+    Actions.update( req.existingAction.id, changes)
     .then(action => {
-        if (action){
             res.json(action)
-        }else {
-            res.json({ message: "something went wrong"})
-        }
     })
+}
 })  
 
 router.delete('/:id', (req,res ) => {
