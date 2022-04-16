@@ -37,24 +37,25 @@ router.post('/',   (req,res ) => {
 
 router.put('/:id', ensureIdExists, (req,res, next ) => {
     const changes = req.body
-    const { name, description } = req.body
-    if(!name || typeof name != 'string'){
+    const { name, description, completed  } = req.body
+    if(!req.body.hasOwnProperty('name')){
         res.status(400).json({ message: 'please input a name'})
         return
-    }else if(!description || typeof description != 'string'){
+    }else if (!req.body.hasOwnProperty('description')){
         res.status(400).json({ message: 'please input a description'})
-        return
+    }else if (!req.body.hasOwnProperty('completed')){
+        res.status(400).json({ message: 'please input a completion status'})
     }else{
-    Projects.update(req.params.id, changes)
-    .then(action => {
-        if (action){
-            res.json(action)
-        }else {
-            res.status(404).json({ message: "there is no project with that id"})
-        }
-    })
-}
-})  
+        Projects.update(req.params.id, changes)
+        .then(action => {
+            if(action){
+                res.json(action)
+            }else {
+                res.status(404).json({ message: 'there is no project with that id'})
+            }
+        })
+    }
+})
 
 router.delete('/:id', (req,res ) => {
     Projects.remove(req.params.id)
