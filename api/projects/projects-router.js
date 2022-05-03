@@ -12,11 +12,14 @@ router.get('/:id', ensureIdExists, (req,res, next) => {
     res.json(req.existingProject)
 })
 
-router.get('/:id/actions', (req, res) => {
-    Projects.get(req.params.id)
-    .then(project => {
-        res.json(project.actions)
-    })
+router.get('/:id/actions', async(req, res) => {
+    const resp = await Projects.get(req.params.id)
+    if(!resp){
+        res.status(404).json([])
+    }else{
+        console.log(resp.actions)
+        res.json(resp.actions)
+    }
 })
 
 router.post('/',   (req,res ) => {
